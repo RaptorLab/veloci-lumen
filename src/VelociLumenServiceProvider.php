@@ -11,6 +11,7 @@ namespace Veloci\Lumen;
 use Illuminate\Support\ServiceProvider;
 use Veloci\Core\Helper\DependencyInjectionContainer;
 use Veloci\Lumen\Helper\LumenDependencyInjectionContainer;
+use Veloci\User\UserPackage;
 
 class VelociLumenServiceProvider extends ServiceProvider
 {
@@ -32,8 +33,11 @@ class VelociLumenServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(DependencyInjectionContainer::class, function ($app) {
-            return new LumenDependencyInjectionContainer($app);
-        });
+
+        $dependencyInjectionContainer = new LumenDependencyInjectionContainer($this->app);
+
+        $this->app->instance(DependencyInjectionContainer::class, $dependencyInjectionContainer);
+
+        new UserPackage($dependencyInjectionContainer);
     }
 }

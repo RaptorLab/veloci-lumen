@@ -2,6 +2,8 @@
 
 namespace Veloci\Lumen\Helper;
 
+use Closure;
+use Laravel\Lumen\Application;
 use Veloci\Core\Helper\DependencyInjectionContainer;
 
 /**
@@ -22,7 +24,7 @@ class LumenDependencyInjectionContainer implements DependencyInjectionContainer
      * LumenDependencyInjectionContainer constructor.
      * @param \Illuminate\Contracts\Foundation\Application $app
      */
-    public function __construct(\Illuminate\Contracts\Foundation\Application $app)
+    public function __construct(Application $app)
     {
         $this->app = $app;
     }
