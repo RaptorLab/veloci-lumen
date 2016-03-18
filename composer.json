@@ -27,7 +27,7 @@
   "require": {
     "php": ">=7.0",
     "raptorlab/veloci": "dev-master",
-    "laravel/lumen": "~5.2"
+    "laravel/lumen-framework": "~5.2"
   },
   "autoload": {
     "psr-4": {
