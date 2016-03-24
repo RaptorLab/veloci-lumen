@@ -39,5 +39,7 @@ class VelociLumenServiceProvider extends ServiceProvider
         $this->app->instance(DependencyInjectionContainer::class, $dependencyInjectionContainer);
 
         new UserPackage($dependencyInjectionContainer);
+
+        
     }
 }
