@@ -10,6 +10,9 @@ namespace Veloci\Lumen\Controller;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Veloci\Core\Helper\Resultset\Filter\ClosureResultsetFilter;
+use Veloci\Core\Helper\Serializer\ModelSerializer;
+use Illuminate\Http\Request;
 use Veloci\User\Manager\UserManager;
 use Veloci\User\Repository\UserRepository;
 
@@ -24,11 +27,16 @@ class UserController extends Controller
      * @var UserRepository
      */
     private $userRepository;
+    /**
+     * @var ModelSerializer
+     */
+    private $modelSerializer;
 
-    public function __construct(UserManager $userManager, UserRepository $userRepository)
+    public function __construct(UserManager $userManager, UserRepository $userRepository, ModelSerializer $modelSerializer)
     {
-        $this->userManager    = $userManager;
-        $this->userRepository = $userRepository;
+        $this->userManager     = $userManager;
+        $this->userRepository  = $userRepository;
+        $this->modelSerializer = $modelSerializer;
     }
 
     
@@ -50,23 +58,45 @@ class UserController extends Controller
     public function logout()
     {
 
+    public function get(Request $request, $id)
+    {
+
     }
+            
     
     public function getAll()
     {
         $users = $this->userRepository->getAll();
 
-        return response(json_encode($users));
-    }
-   
-    public function get($id)
-    {
+        $result = [];
+
+        foreach ($users as $key => $user) {
+            $result[] = (array)$user;
+        }
 
     }
     
     public function update()
     {
+        return response(json_encode($result));
+    }
 
+    public function save(Request $request)
+    {
+
+        $data = $request->input();
+
+        $model = $this->userManager->create();
+
+        $model = $this->modelSerializer->hydrate($data, $model);
+
+//        var_dump($this->modelSerializer->serialize($model));
+//        die();
+
+        $model = $this->userRepository->save($model);
+
+        return response(json_encode($this->modelSerializer->serialize($model)));
+    }
     }
     
     public function delete($id)
