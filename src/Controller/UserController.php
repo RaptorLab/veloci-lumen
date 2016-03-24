@@ -8,11 +8,9 @@
 
 namespace Veloci\Lumen\Controller;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Veloci\Core\Helper\Resultset\Filter\ClosureResultsetFilter;
+use Laravel\Lumen\Routing\Controller;
 use Veloci\Core\Helper\Serializer\ModelSerializer;
-use Illuminate\Http\Request;
 use Veloci\User\Manager\UserManager;
 use Veloci\User\Repository\UserRepository;
 
@@ -57,6 +55,7 @@ class UserController extends Controller
     
     public function logout()
     {
+    }
 
     public function get(Request $request, $id)
     {
@@ -78,7 +77,7 @@ class UserController extends Controller
     
     public function update()
     {
-        return response(json_encode($result));
+//        return response(json_encode($result));
     }
 
     public function save(Request $request)
@@ -97,13 +96,10 @@ class UserController extends Controller
 
         return response(json_encode($this->modelSerializer->serialize($model)));
     }
-    }
     
     public function delete($id)
     {
 
     }
-
-
 }
 
