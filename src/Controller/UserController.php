@@ -8,9 +8,11 @@
 
 namespace Veloci\Lumen\Controller;
 
+use App\User;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller;
 use Veloci\Core\Helper\Serializer\ModelSerializer;
+use Veloci\Core\Repository\MetadataRepository;
 use Veloci\User\Manager\UserManager;
 use Veloci\User\Repository\UserRepository;
 
@@ -42,7 +44,15 @@ class UserController extends Controller
     {
         $data = $request->all();
 
-        return response(json_encode($data, JSON_PRETTY_PRINT));
+        /** @var User $user */
+        $user = $this->userManager->create();
+        $user = $this->modelSerializer->hydrate($data, $user);
+
+        $this->userManager->signup($user);
+
+        $response = $this->modelSerializer->serialize($user);
+
+        return response()->json($response);
     }
 
     
