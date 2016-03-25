@@ -8,8 +8,10 @@
 
 namespace Veloci\Lumen;
 
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\ServiceProvider;
 use Veloci\Core\Helper\DependencyInjectionContainer;
+use Veloci\Lumen\Handler\Handler;
 use Veloci\Lumen\Helper\LumenDependencyInjectionContainer;
 use Veloci\User\UserPackage;
 
@@ -33,13 +35,14 @@ class VelociLumenServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         $dependencyInjectionContainer = new LumenDependencyInjectionContainer($this->app);
 
         $this->app->instance(DependencyInjectionContainer::class, $dependencyInjectionContainer);
 
-        new UserPackage($dependencyInjectionContainer);
+//        $this->app->instance(ExceptionHandler::class, function () {
+//            return new Handler();
+//        });
 
-        
+        new UserPackage($dependencyInjectionContainer);
     }
 }

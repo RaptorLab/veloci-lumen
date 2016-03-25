@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller;
 use Veloci\Core\Helper\Serializer\ModelSerializer;
 use Veloci\Core\Repository\MetadataRepository;
+use Veloci\User\Exception\ValidationException;
 use Veloci\User\Manager\UserManager;
 use Veloci\User\Repository\UserRepository;
 
@@ -39,15 +40,15 @@ class UserController extends Controller
         $this->modelSerializer = $modelSerializer;
     }
 
-    
+
     public function signup(Request $request)
     {
+
         $data = $request->all();
 
         /** @var User $user */
         $user = $this->userManager->create();
         $user = $this->modelSerializer->hydrate($data, $user);
-
         $this->userManager->signup($user);
 
         $response = $this->modelSerializer->serialize($user);
@@ -55,14 +56,14 @@ class UserController extends Controller
         return response()->json($response);
     }
 
-    
+
     public function login()
     {
         $result = ['Result' => 'CIao'];
 
         return response(json_encode($result), 200);
     }
-    
+
     public function logout()
     {
     }
@@ -71,8 +72,8 @@ class UserController extends Controller
     {
 
     }
-            
-    
+
+
     public function getAll()
     {
         $users = $this->userRepository->getAll();
@@ -84,7 +85,7 @@ class UserController extends Controller
         }
 
     }
-    
+
     public function update()
     {
 //        return response(json_encode($result));
@@ -106,7 +107,7 @@ class UserController extends Controller
 
         return response(json_encode($this->modelSerializer->serialize($model)));
     }
-    
+
     public function delete($id)
     {
 
