@@ -12,8 +12,6 @@ use App\User;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller;
 use Veloci\Core\Helper\Serializer\ModelSerializer;
-use Veloci\Core\Repository\MetadataRepository;
-use Veloci\User\Exception\ValidationException;
 use Veloci\User\Manager\UserManager;
 use Veloci\User\Repository\UserRepository;
 
@@ -39,7 +37,6 @@ class UserController extends Controller
         $this->userRepository  = $userRepository;
         $this->modelSerializer = $modelSerializer;
     }
-
 
     public function signup(Request $request)
     {
