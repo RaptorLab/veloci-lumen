@@ -39,12 +39,15 @@ class AuthController extends Controller
 
         $user = $userResolver->resolve($request);
 
+
         if ($user === null) {
             abort(401);
         }
 
-        $this->authManager->login($user);
+        $session = $this->authManager->login($user);
 
-        return response(json_encode($result), 200);
+        return response()->json([
+            'token'=> $session->getId()
+        ]);
     }
 }

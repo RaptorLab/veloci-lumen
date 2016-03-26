@@ -21,12 +21,18 @@ class LumenDependencyInjectionContainer implements DependencyInjectionContainer
     private $app;
 
     /**
+     * @var string[]
+     */
+    private $classes;
+
+    /**
      * LumenDependencyInjectionContainer constructor.
      * @param \Illuminate\Contracts\Foundation\Application $app
      */
     public function __construct(Application $app)
     {
-        $this->app = $app;
+        $this->app     = $app;
+        $this->classes = [];
     }
 
     /**
@@ -36,6 +42,8 @@ class LumenDependencyInjectionContainer implements DependencyInjectionContainer
     public function registerClass($alias, $class)
     {
         $this->app->bind($alias, $class);
+
+        $this->classes[$alias] = $class;
     }
 
     /**
@@ -45,6 +53,8 @@ class LumenDependencyInjectionContainer implements DependencyInjectionContainer
     public function registerClosure($alias, Closure $closure)
     {
         $this->app->bind($alias, $closure);
+
+        $this->classes[$alias] = null;
     }
 
     /**
@@ -54,5 +64,25 @@ class LumenDependencyInjectionContainer implements DependencyInjectionContainer
     public function get($alias)
     {
         return $this->app->make($alias);
+    }
+
+    /**
+     * @param $alias
+     * @return string | null
+     */
+    public function getClass($alias)
+    {
+        if (!array_key_exists($alias, $this->classes)) {
+            return null;
+        }
+
+        $class = $this->classes[$alias];
+
+        if (!$class) {
+            $class                 = get_class($this->app[$alias]);
+            $this->classes[$alias] = $class;
+        }
+
+        return $class;
     }
 }
