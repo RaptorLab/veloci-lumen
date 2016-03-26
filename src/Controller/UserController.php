@@ -12,6 +12,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller;
 use Veloci\Core\Helper\Serializer\ModelSerializer;
+use Veloci\User\Manager\AuthManager;
 use Veloci\User\Manager\UserManager;
 use Veloci\User\Repository\UserRepository;
 
@@ -30,12 +31,16 @@ class UserController extends Controller
      * @var ModelSerializer
      */
     private $modelSerializer;
+    /**
+     * @var AuthManager
+     */
+    private $authManager;
 
-    public function __construct(UserManager $userManager, UserRepository $userRepository, ModelSerializer $modelSerializer)
+    public function __construct(UserManager $userManager, AuthManager $authManager, UserRepository $userRepository)
     {
-        $this->userManager     = $userManager;
-        $this->userRepository  = $userRepository;
-        $this->modelSerializer = $modelSerializer;
+        $this->userManager    = $userManager;
+        $this->userRepository = $userRepository;
+        $this->authManager    = $authManager;
     }
 
     public function signup(Request $request)
@@ -44,22 +49,17 @@ class UserController extends Controller
         $data = $request->all();
 
         /** @var User $user */
-        $user = $this->userManager->create();
-        $user = $this->modelSerializer->hydrate($data, $user);
+        $user = $this->userManager->create($data);
+
         $this->userManager->signup($user);
 
-        $response = $this->modelSerializer->serialize($user);
+        $response = $this->userRepository->serialize($user);
 
         return response()->json($response);
     }
 
 
-    public function login()
-    {
-        $result = ['Result' => 'CIao'];
-
-        return response(json_encode($result), 200);
-    }
+    
 
     public function logout()
     {
@@ -90,16 +90,7 @@ class UserController extends Controller
 
     public function save(Request $request)
     {
-
-        $data = $request->input();
-
-        $model = $this->userManager->create();
-
-        $model = $this->modelSerializer->hydrate($data, $model);
-
-//        var_dump($this->modelSerializer->serialize($model));
-//        die();
-
+        $model = $this->userManager->create($request->input());
         $model = $this->userRepository->save($model);
 
         return response(json_encode($this->modelSerializer->serialize($model)));

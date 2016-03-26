@@ -8,7 +8,7 @@
  * @apiGroup User
  */
 $app->get('api/users', [
-    'as' => 'user.get',
+    'as'   => 'user.get',
     'uses' => \Veloci\Lumen\Controller\UserController::class . '@getAll'
 ]);
 
@@ -19,7 +19,7 @@ $app->get('api/users', [
  * @apiGroup User
  */
 $app->post('api/users/signup', [
-    'as' => 'user.signup',
+    'as'   => 'user.signup',
     'uses' => \Veloci\Lumen\Controller\UserController::class . '@signup'
 ]);
 
@@ -28,9 +28,10 @@ $app->post('api/users/signup', [
  * @apiName LoginUser
  * @apiGroup User
  */
-$app->post('api/users/login', function () {
-    return response('To implement', 418);
-});
+$app->post('api/users/login', [
+    'as'   => 'user.login',
+    'uses' => \Veloci\Lumen\Controller\AuthController::class . '@login'
+]);
 
 
 /**
