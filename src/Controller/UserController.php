@@ -8,13 +8,13 @@
 
 namespace Veloci\Lumen\Controller;
 
-use App\User;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller;
 use Veloci\Core\Helper\Serializer\ModelSerializer;
 use Veloci\User\Manager\AuthManager;
 use Veloci\User\Manager\UserManager;
 use Veloci\User\Repository\UserRepository;
+use Veloci\User\User;
 
 class UserController extends Controller
 {
@@ -81,6 +81,7 @@ class UserController extends Controller
             $result[] = (array)$user;
         }
 
+        return response()->json($result);
     }
 
     public function update()

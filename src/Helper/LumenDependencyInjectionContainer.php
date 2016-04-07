@@ -3,7 +3,7 @@
 namespace Veloci\Lumen\Helper;
 
 use Closure;
-use Laravel\Lumen\Application;
+use Illuminate\Contracts\Foundation\Application;
 use Veloci\Core\Helper\DependencyInjectionContainer;
 
 /**
@@ -16,7 +16,7 @@ class LumenDependencyInjectionContainer implements DependencyInjectionContainer
 {
 
     /**
-     * @var \Illuminate\Contracts\Foundation\Application
+     * @var Application
      */
     private $app;
 
@@ -27,7 +27,7 @@ class LumenDependencyInjectionContainer implements DependencyInjectionContainer
 
     /**
      * LumenDependencyInjectionContainer constructor.
-     * @param \Illuminate\Contracts\Foundation\Application $app
+     * @param Application $app
      */
     public function __construct(Application $app)
     {
@@ -38,23 +38,17 @@ class LumenDependencyInjectionContainer implements DependencyInjectionContainer
     /**
      * @param string $alias
      * @param string $class
+     * @param Closure $generator
      */
-    public function registerClass($alias, $class)
+    public function registerClass($alias, $class, Closure $generator = null)
     {
-        $this->app->bind($alias, $class);
-
         $this->classes[$alias] = $class;
-    }
 
-    /**
-     * @param string $alias
-     * @param Closure $closure
-     */
-    public function registerClosure($alias, Closure $closure)
-    {
-        $this->app->bind($alias, $closure);
-
-        $this->classes[$alias] = null;
+        if ($generator === null) {
+            $this->app->bind($alias, $class);
+        } else {
+            $this->app->bind($alias, $generator);
+        }
     }
 
     /**

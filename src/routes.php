@@ -7,7 +7,7 @@
  * @apiName GetAllUsers
  * @apiGroup User
  */
-$app->get('api/users', [
+$this->app->get('api/users', [
     'as'   => 'user.get',
     'uses' => \Veloci\Lumen\Controller\UserController::class . '@getAll'
 ]);
@@ -18,7 +18,7 @@ $app->get('api/users', [
  * @apiName SignupUser
  * @apiGroup User
  */
-$app->post('api/users/signup', [
+$this->app->post('api/users/signup', [
     'as'   => 'user.signup',
     'uses' => \Veloci\Lumen\Controller\UserController::class . '@signup'
 ]);
@@ -28,7 +28,7 @@ $app->post('api/users/signup', [
  * @apiName LoginUser
  * @apiGroup User
  */
-$app->post('api/users/login', [
+$this->app->post('api/users/login', [
     'as'   => 'user.login',
     'uses' => \Veloci\Lumen\Controller\AuthController::class . '@login'
 ]);
@@ -39,7 +39,7 @@ $app->post('api/users/login', [
  * @apiName LogoutUser
  * @apiGroup User
  */
-$app->post('api/users/logout', function () {
+$this->app->post('api/users/logout', function () {
     return response('To implement', 418);
 });
 
@@ -50,7 +50,7 @@ $app->post('api/users/logout', function () {
  * @apiGroup User
  */
 
-$app->get('api/users/{id}', function () {
+$this->app->get('api/users/{id}', function () {
     return response('To implement', 418);
 });
 
@@ -59,7 +59,7 @@ $app->get('api/users/{id}', function () {
  * @apiName UpdateUser
  * @apiGroup User
  */
-$app->put('api/users', function () {
+$this->app->put('api/users', function () {
     return response('To implement', 418);
 });
 
@@ -68,6 +68,6 @@ $app->put('api/users', function () {
  * @apiName DeleteUser
  * @apiGroup User
  */
-$app->delete('api/users', function () {
+$this->app->delete('api/users', function () {
     return response('To implement', 418);
 });

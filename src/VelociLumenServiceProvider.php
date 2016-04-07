@@ -8,10 +8,8 @@
 
 namespace Veloci\Lumen;
 
-use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\ServiceProvider;
 use Veloci\Core\Helper\DependencyInjectionContainer;
-use Veloci\Lumen\Handler\Handler;
 use Veloci\Lumen\Helper\LumenDependencyInjectionContainer;
 use Veloci\User\UserPackage;
 
@@ -24,7 +22,6 @@ class VelociLumenServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $app = $this->app;
         require __DIR__ . '/routes.php';
     }
 
