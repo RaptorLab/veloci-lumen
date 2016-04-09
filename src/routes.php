@@ -9,7 +9,7 @@
  */
 $this->app->get('api/users', [
     'as'   => 'user.get',
-    'uses' => \Veloci\Lumen\Controller\UserController::class . '@getAll'
+    'uses' => \Veloci\Lumen\Controller\User\UserController::class . '@getAll'
 ]);
 
 
@@ -20,7 +20,7 @@ $this->app->get('api/users', [
  */
 $this->app->post('api/users/signup', [
     'as'   => 'user.signup',
-    'uses' => \Veloci\Lumen\Controller\UserController::class . '@signup'
+    'uses' => \Veloci\Lumen\Controller\User\SignupController::class . '@handle'
 ]);
 
 /**
@@ -30,7 +30,7 @@ $this->app->post('api/users/signup', [
  */
 $this->app->post('api/users/login', [
     'as'   => 'user.login',
-    'uses' => \Veloci\Lumen\Controller\AuthController::class . '@login'
+    'uses' => \Veloci\Lumen\Controller\User\LoginController::class . '@handle'
 ]);
 
 

@@ -2,26 +2,26 @@
 /**
  * Created by PhpStorm.
  * User: christian
- * Date: 26/03/16
- * Time: 02:48
+ * Date: 09/04/16
+ * Time: 15:58
  */
 
-namespace Veloci\Lumen\Controller;
+namespace Veloci\Lumen\Controller\User;
 
 
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller;
-use Veloci\User\Factory\UserResolverFactory;
+use Veloci\Lumen\Factory\UserResolverFactory;
+use Veloci\Lumen\Resolver\StandardUserResolver;
 use Veloci\User\Manager\AuthManager;
-use Veloci\User\Resolver\StandardUserResolver;
 
-class AuthController extends Controller
+class LoginController extends Controller
 {
     /**
      * @var UserResolverFactory
      */
     private $userResolverFactory;
-    
+
     /**
      * @var AuthManager
      */
@@ -33,12 +33,11 @@ class AuthController extends Controller
         $this->authManager         = $authManager;
     }
 
-    public function login(Request $request)
+    public function handle(Request $request)
     {
         $userResolver = $this->userResolverFactory->getUserResolver(StandardUserResolver::getType());
 
         $user = $userResolver->resolve($request);
-
 
         if ($user === null) {
             abort(401);
@@ -47,7 +46,7 @@ class AuthController extends Controller
         $session = $this->authManager->login($user);
 
         return response()->json([
-            'token'=> $session->getId()
+            'token'=> (string)$session->getToken()
         ]);
     }
 }

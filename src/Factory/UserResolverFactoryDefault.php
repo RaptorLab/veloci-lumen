@@ -11,7 +11,7 @@ namespace Veloci\Lumen\Factory;
 use InvalidArgumentException;
 use Veloci\Core\Helper\DependencyInjectionContainer;
 use Veloci\Core\Repository\KeyValueStore;
-use Veloci\User\Resolver\UserResolver;
+use Veloci\Lumen\Resolver\UserResolver;
 
 class UserResolverFactoryDefault implements UserResolverFactory
 {

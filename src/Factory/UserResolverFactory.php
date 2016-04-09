@@ -9,7 +9,7 @@
 namespace Veloci\Lumen\Factory;
 
 
-use Veloci\User\Resolver\UserResolver;
+use Veloci\Lumen\Resolver\UserResolver;
 
 interface UserResolverFactory
 {
