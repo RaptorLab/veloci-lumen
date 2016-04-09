@@ -44,18 +44,16 @@ class VelociLumenServiceProvider extends ServiceProvider
 //        });
 
 
-        
         $configuration = $this->getConfiguration();
 
         new UserPackage($dependencyInjectionContainer, $configuration);
     }
 
-    private function getConfiguration ():PackageConfiguration {
+    private function getConfiguration():PackageConfiguration
+    {
         $configuration = new PackageConfigurationDefault();
 
         $configuration->setDatabase(new DatabaseConfigurationDefault(config('database.type')));
-
-        //$this->app ->get['config']['database'];
 
         return $configuration;
     }

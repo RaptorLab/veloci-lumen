@@ -73,15 +73,9 @@ class UserController extends Controller
 
     public function getAll()
     {
-        $users = $this->userRepository->getAll();
+        $users = $this->userRepository->getAll(null, false);
 
-        $result = [];
-
-        foreach ($users as $key => $user) {
-            $result[] = (array)$user;
-        }
-
-        return response()->json($result);
+        return response()->json($users->toArray());
     }
 
     public function update()
