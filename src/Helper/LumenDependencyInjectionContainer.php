@@ -3,7 +3,7 @@
 namespace Veloci\Lumen\Helper;
 
 use Closure;
-use Illuminate\Contracts\Foundation\Application;
+use Laravel\Lumen\Application;
 use Veloci\Core\Helper\DependencyInjectionContainer;
 
 /**
@@ -78,5 +78,14 @@ class LumenDependencyInjectionContainer implements DependencyInjectionContainer
         }
 
         return $class;
+    }
+
+    /**
+     * @param $alias
+     * @return bool
+     */
+    public function contains($alias):bool
+    {
+        return array_key_exists($alias, $this->classes);
     }
 }

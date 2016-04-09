@@ -9,6 +9,9 @@
 namespace Veloci\Lumen;
 
 use Illuminate\Support\ServiceProvider;
+use Veloci\Core\Configuration\DatabaseConfigurationDefault;
+use Veloci\Core\Configuration\PackageConfiguration;
+use Veloci\Core\Configuration\PackageConfigurationDefault;
 use Veloci\Core\Helper\DependencyInjectionContainer;
 use Veloci\Lumen\Helper\LumenDependencyInjectionContainer;
 use Veloci\User\UserPackage;
@@ -40,6 +43,20 @@ class VelociLumenServiceProvider extends ServiceProvider
 //            return new Handler();
 //        });
 
-        new UserPackage($dependencyInjectionContainer);
+
+        
+        $configuration = $this->getConfiguration();
+
+        new UserPackage($dependencyInjectionContainer, $configuration);
+    }
+
+    private function getConfiguration ():PackageConfiguration {
+        $configuration = new PackageConfigurationDefault();
+
+        $configuration->setDatabase(new DatabaseConfigurationDefault(config('database.type')));
+
+        //$this->app ->get['config']['database'];
+
+        return $configuration;
     }
 }
