@@ -71,7 +71,7 @@ class VelociLumenServiceProvider extends ServiceProvider
     {
         $configuration = new PackageConfigurationDefault();
 
-        $configuration->setDatabase(new DatabaseConfigurationDefault(config('database.type')));
+        $configuration->setDatabase(new DatabaseConfigurationDefault(config('database.type', 'mongodb')));
 
         return $configuration;
     }
