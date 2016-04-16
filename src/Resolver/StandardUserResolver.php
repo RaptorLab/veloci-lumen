@@ -8,21 +8,23 @@
 
 namespace Veloci\Lumen\Resolver;
 
-
 use Illuminate\Http\Request;
-use Laravel\Lumen\Routing\ProvidesConvenienceMethods;
+use Illuminate\Support\Facades\Validator;
 use Veloci\User\Exception\ValidationException;
 use Veloci\User\Repository\UserRepository;
 use Veloci\User\User;
 
 class StandardUserResolver implements UserResolver
 {
-    use ProvidesConvenienceMethods;
-
     /**
      * @var UserRepository
      */
     private $userRepository;
+
+    /**
+     * @var \Illuminate\Validation\Validator
+     */
+    private $validator;
 
     public function __construct(UserRepository $userRepository)
     {
@@ -37,7 +39,7 @@ class StandardUserResolver implements UserResolver
      */
     public function resolve(Request $request):User
     {
-        $this->validate($request, [
+        $this->check($request, [
             'username' => 'required',
             'password' => 'required'
         ]);
@@ -54,7 +56,7 @@ class StandardUserResolver implements UserResolver
             ]);
         }
 
-        if($user->getPassword() !== $password) {
+        if ($user->getPassword() !== $password) {
             throw new ValidationException([
                 'password' => 'wrong'
             ]);
@@ -66,5 +68,16 @@ class StandardUserResolver implements UserResolver
     public static function getType():string
     {
         return 'standard';
+    }
+
+    private function check(Request $request, $rules)
+    {
+        $data = $request->all();
+
+        $validator = Validator::make($data, $rules);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator->getMessageBag()->toArray());
+        }
     }
 }
