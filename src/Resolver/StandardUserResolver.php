@@ -39,6 +39,7 @@ class StandardUserResolver implements UserResolver
      */
     public function resolve(Request $request):User
     {
+        $this->
         $this->check($request, [
             'username' => 'required',
             'password' => 'required'
