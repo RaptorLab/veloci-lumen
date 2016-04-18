@@ -14,6 +14,7 @@ use Veloci\Core\Configuration\PackageConfiguration;
 use Veloci\Core\Configuration\PackageConfigurationDefault;
 use Veloci\Core\Helper\DependencyInjectionContainer;
 use Veloci\Core\Repository\InMemoryKeyValueStore;
+use Veloci\Lumen\Command\ContainerDebugCommand;
 use Veloci\Lumen\Factory\UserResolverFactory;
 use Veloci\Lumen\Factory\UserResolverFactoryDefault;
 use Veloci\Lumen\Helper\LumenDependencyInjectionContainer;
@@ -61,6 +62,11 @@ class VelociLumenServiceProvider extends ServiceProvider
 //            return new Handler();
 //        });
 
+        $this->app->singleton('command.debug.container', function (){
+            return new ContainerDebugCommand();
+        });
+
+        $this->commands('command.debug.container');
 
         $configuration = $this->getConfiguration();
 
@@ -71,7 +77,7 @@ class VelociLumenServiceProvider extends ServiceProvider
     {
         $configuration = new PackageConfigurationDefault();
 
-        $configuration->setDatabase(new DatabaseConfigurationDefault(config('database.type')));
+        $configuration->setDatabase(new DatabaseConfigurationDefault(config('database.type', 'mongodb')));
 
         return $configuration;
     }

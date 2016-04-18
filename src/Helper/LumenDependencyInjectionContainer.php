@@ -88,4 +88,12 @@ class LumenDependencyInjectionContainer implements DependencyInjectionContainer
     {
         return array_key_exists($alias, $this->classes);
     }
+
+    /**
+     * @return array
+     */
+    public function debug():array
+    {
+        return $this->classes;
+    }
 }

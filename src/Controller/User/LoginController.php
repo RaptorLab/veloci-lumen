@@ -38,7 +38,7 @@ class LoginController extends Controller
         $userResolver = $this->userResolverFactory->getUserResolver(StandardUserResolver::getType());
 
         $user = $userResolver->resolve($request);
-
+        
         if ($user === null) {
             abort(401);
         }
