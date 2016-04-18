@@ -1,0 +1,7 @@
+{
+  "name": "Veloci Lumen API",
+  "version": "1.0.0",
+  "description": "API interface for Veloci",
+  "title": "Veloci Lumen API",
+  "url" : "{base_url}/api/"
+}

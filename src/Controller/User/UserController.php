@@ -41,7 +41,7 @@ class UserController extends Controller
 
     public function get(Request $request, $id)
     {
-
+        return response('To implement', 418);
     }
 
 
